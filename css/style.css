@@ -397,20 +397,19 @@ div,span,a,i,strong,p{	-webkit-transition: all 0.25s linear 0s;-o-transition: al
 .sidebar-news .item ul li i.i-3{background:#ffc064;}
 .sidebar-news .item ul li:last-child a{border:none;}
 
+/**知识库**/
+.knowledge {padding-bottom: 40px;}
+.knowledge .menus {margin-bottom: 21px; height: 35px;line-height: 35px}
+.knowledge .menus ul li{display: inline-block;}
+.knowledge .menus ul li a{padding:0 10px;color: #333;font-size: 13px; display: block;}
+.knowledge .menus ul li a.current,
+.knowledge .menus ul li a:hover{border-radius: 5px; color: #fff;background: #6d6d6d}
 
-/**新闻&详情**/
-.news {padding-bottom: 40px;}
-.news .menus {margin-bottom: 21px; height: 35px;line-height: 35px}
-.news .menus ul li{display: inline-block;}
-.news .menus ul li a{padding:0 10px;color: #333;font-size: 13px; display: block;}
-.news .menus ul li a.current,
-.news .menus ul li a:hover{border-radius: 5px; color: #fff;background: #6d6d6d}
-
-.news-list {padding:0px 38px 0px; border:1px solid #e4ecf3;}
-.news-list ul{padding-bottom: 20px}
-.news-list ul li{padding:18px 0 18px; border-bottom:1px solid #e5e5e5;}
-.news-list ul li .title{ margin-bottom: 5px;display: inline-block; font-size: 16px; line-height: 20px;color: #07111b}
-.news-list ul li .title:hover{color: #00a4ff}
+.knowledge-list {padding:0px 38px 0px; border:1px solid #e4ecf3;}
+.knowledge-list ul{padding-bottom: 20px}
+.knowledge-list ul li{padding:18px 0 18px; border-bottom:1px solid #e5e5e5;}
+.knowledge-list ul li .title{ margin-bottom: 5px;display: inline-block; font-size: 16px; line-height: 20px;color: #07111b}
+.knowledge-list ul li .title:hover{color: #00a4ff}
  
 p.tag a{display: inline-block; color: #999; margin-right: 20px;}
 p.tag a:first-child:hover{color:#00a4ff }
@@ -524,9 +523,9 @@ p.tag a .i-2{background-position:-73px 2px;width: 18px; }
 /**关于我们**/
 .about {background: #f9f9f9;padding-bottom: 80px}
 .about .bread-crumbs{margin-bottom: 30px}
-.about .about-cont{padding:13px 40px; float: right;width: 780px;background: #fff;border:1px solid #e4ecf3;}
+.about .about-cont{padding:38px; background: #fff;border:1px solid #e4ecf3;}
 .about .about-cont .hd{color: #363d40;font-size: 16px; line-height: 50px;border-bottom: 1px solid #e5e5e5}
-.about .about-cont .content{padding:20px;line-height: 28px;}
+.about .about-cont .content{padding:20px 0;line-height: 28px;}
 .about .about-cont .content h2{font-size: 16px;margin-bottom: 10px}
 .about .about-cont .content p{color: #666;margin-bottom: 20px}
 
