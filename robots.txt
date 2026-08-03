@@ -1,0 +1,86 @@
+# 科石教育官网 robots.txt
+# 目的：允许主流搜索引擎与 AI 抓取器索引/引用本站公开内容（GEO 第一阶段）
+# 参考：https://home.corner-stone.cn/llms.txt 提供了给 AI 的结构化站点说明
+
+# ---------- 默认规则 ----------
+User-agent: *
+Allow: /
+Disallow: /js/
+Disallow: /css/
+
+# ---------- 海外通用搜索引擎 ----------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# ---------- 国内搜索引擎（百度/搜狗/360/神马等）----------
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: Sosospider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# ---------- 海外 AI / LLM 抓取器 ----------
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+Sitemap: https://home.corner-stone.cn/sitemap.xml
