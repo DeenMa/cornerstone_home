@@ -38,7 +38,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {color: #999;}
 body {margin:0 auto; font: 14px/22px "\5FAE\8F6F\96C5\9ED1DE"; }
 a { color:#545454; }
 a:hover {  text-decoration:none; }
-.wrap { position:relative; width: 1144px; margin:0 auto; }
+.wrap { position:relative; max-width: 1144px; width: 90%; margin:0 auto; }
 .header,.container,.footer { margin:0 auto; }
 
 i,.icon{background: url(../images/icon.png) no-repeat 0 0; display: inline-block;width: 20px;height: 20px;}
@@ -645,3 +645,279 @@ p.tag a .i-2{background-position:-73px 2px;width: 18px; }
 .serveList ul li strong{padding-top: 20px; display: block;margin-bottom: 20px; font-size: 18px;}
 .serveList ul li p{line-height: 30px; margin-bottom: 30px; color: #666;font-size: 16px; padding:0 40px;}
 .serveList ul li cite{font-size: 20px;color: red;font-weight: bold;}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .wrap {
+        width: 96%; /* Adjust for smaller screens */
+        margin: 0 auto;
+    }
+
+    /* Header adjustments */
+    .header {
+        height: auto;
+        position: relative; /* Change from fixed to relative for mobile */
+        padding: 10px 0;
+        text-align: center;
+    }
+    .header .logo {
+        float: none;
+        margin: 0 auto;
+        text-align: center;
+        line-height: normal;
+        height: auto;
+    }
+    .header .nav {
+        float: none;
+        display: none; /* Hide navigation by default */
+        width: 100%;
+        text-align: center;
+    }
+    .header .nav li {
+        display: block;
+        padding: 5px 0;
+    }
+    .header .nav li a {
+        line-height: 40px;
+    }
+    .header .fr {
+        float: none;
+        width: 100%;
+        text-align: center;
+    }
+    .header .down {
+        padding-top: 0;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .header .down .cont {
+        position: static;
+        width: 100%;
+        right: auto;
+        top: auto;
+        border: none;
+        box-shadow: none;
+    }
+    .header .not-login {
+        float: none;
+        margin-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+    .header .not-login li {
+        display: block;
+        line-height: 40px;
+        padding: 0;
+    }
+
+    /* Hamburger menu icon (needs to be added to HTML and toggled with JS) */
+    .menu-toggle {
+        display: block; /* Show hamburger icon */
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        z-index: 100;
+    }
+    .menu-toggle span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background: #333;
+        margin-bottom: 5px;
+        transition: all 0.3s ease-in-out;
+    }
+    .menu-toggle.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open span:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* General content adjustments */
+    .container {
+        padding-top: 0; /* Remove fixed header padding */
+    }
+    .item-h-d .i-hd {
+        height: auto;
+        padding: 20px 10px;
+    }
+    .item-h-d .i-hd strong {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+    .item-h-d .i-hd p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* Banner adjustments for mobile */
+    .banner {
+        height: 300px; /* 移动端降低高度 */
+    }
+    .banner .bd li {
+        height: 300px;
+        background-size: cover; /* 改为cover以适应移动端 */
+    }
+
+    /* Specific section adjustments */
+    .video-list,
+    .index-news-list,
+    .serveList ul,
+    .join-info,
+    .join-policy ul,
+    .join-sustain ul,
+    .join-partners ul,
+    .join-process ul,
+    .teacher-list ul,
+    .video-question .list ul {
+        width: auto;
+        margin-left: 0;
+        padding: 0 10px; /* Add some horizontal padding */
+    }
+
+    .video-list .item,
+    .index-news-list ul li,
+    .serveList ul li,
+    .join-info .item,
+    .join-policy ul li,
+    .join-sustain ul li,
+    .join-partners ul li,
+    .join-process ul li,
+    .teacher-list li,
+    .video-question .list ul li {
+        float: none;
+        width: 100%;
+        margin: 0 0 20px 0; /* Stack vertically */
+        padding: 15px;
+        box-sizing: border-box; /* Include padding in width */
+    }
+
+    /* 导师团队卡片在移动端的特殊处理 */
+    .index-news-list {
+        width: auto !important;
+        margin-left: 0 !important;
+    }
+    
+    .index-news-list ul {
+        max-width: none !important;
+        flex-direction: column !important;
+        align-items: center;
+    }
+    
+    .index-news-list ul li {
+        width: calc(100% - 20px) !important;
+        max-width: 400px;
+        margin: 0 10px 20px 10px !important;
+    }
+
+    .video-list .item img {
+        height: auto;
+        max-width: 100%;
+    }
+
+    .video .side-video .prev,
+    .video .side-video .next {
+        display: none; /* Hide navigation arrows on mobile */
+    }
+
+    .bread-crumbs .wrap {
+        padding: 0 10px;
+    }
+
+    .footer .info ul,
+    .footer .fl .menus ul,
+    .footer .online ul {
+        width: auto;
+        margin-left: 0;
+        text-align: center;
+    }
+    .footer .info ul li,
+    .footer .fl ul li,
+    .footer .online ul li {
+        display: block;
+        float: none;
+        width: 100%;
+        padding: 5px 0;
+        border: none;
+    }
+    .footer .fl ul li a {
+        line-height: normal;
+    }
+    .footer .online {
+        float: none;
+        text-align: center;
+    }
+    .sidebar-tool {
+        display: none; /* Hide sidebar tool on mobile */
+    }
+
+    /* Adjustments for specific elements that might break layout */
+    .video-question .input-box {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .video-question .input-box .i-text {
+        width: calc(100% - 115px); /* Adjust input width */
+    }
+    .video-question .list {
+        width: 100%;
+        margin: 0;
+        padding: 20px 10px;
+        box-sizing: border-box;
+    }
+    .video-question .list ul li {
+        padding: 0 0 0 40px;
+        width: 100%;
+        margin-left: 0;
+    }
+    .video-question .list ul li span {
+        left: 5px;
+    }
+
+    .about .about-sidebar {
+        float: none;
+        width: 100%;
+    }
+    .about .about-cont {
+        padding: 15px;
+    }
+    .user .user-sidebar {
+        float: none;
+        width: 100%;
+    }
+    .user .user-cont {
+        float: none;
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .user .user-cont .video-list {
+        width: 100%;
+    }
+    .user .user-cont .video-list .item {
+        margin: 0 0 20px 0;
+    }
+    .popup {
+        width: 90%;
+        margin: -150px auto 0;
+        left: 5%;
+        right: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .popup .form label .i-text.small {
+        width: calc(100% - 130px);
+    }
+}
