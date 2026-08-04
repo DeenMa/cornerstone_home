@@ -1,1 +1,4 @@
 images/
+source_data/
+.env
+__pycache__/
