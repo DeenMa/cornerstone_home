@@ -14,6 +14,7 @@ import os
 import re
 import time
 
+import docx
 import fitz
 from dotenv import load_dotenv
 from google import genai
@@ -55,6 +56,21 @@ def extract_pdf_text(pdf_path):
     return "\n".join(page.get_text() for page in doc)
 
 
+def extract_docx_text(docx_path):
+    doc = docx.Document(docx_path)
+    return "\n".join(p.text for p in doc.paragraphs)
+
+
+def extract_transcript_text(file_path):
+    """根据扩展名（.pdf 或 .docx）提取转写稿全文。"""
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".pdf":
+        return extract_pdf_text(file_path)
+    if ext == ".docx":
+        return extract_docx_text(file_path)
+    raise ValueError(f"不支持的文件类型: {file_path}")
+
+
 def strip_json_fence(text):
     text = text.strip()
     text = re.sub(r"^```(?:json)?\s*", "", text)
@@ -93,14 +109,17 @@ def process_transcripts():
         raise ValueError("未找到 GEMINI_APIKEY，请在项目根目录 .env 文件里设置")
     client = genai.Client(api_key=api_key)
 
-    pdf_paths = sorted(glob.glob(os.path.join(TRANSCRIPT_DIR, "*.pdf")))
-    if not pdf_paths:
-        print(f"{TRANSCRIPT_DIR} 下没有找到 PDF 文件")
+    transcript_paths = sorted(
+        glob.glob(os.path.join(TRANSCRIPT_DIR, "*.pdf"))
+        + glob.glob(os.path.join(TRANSCRIPT_DIR, "*.docx"))
+    )
+    if not transcript_paths:
+        print(f"{TRANSCRIPT_DIR} 下没有找到 PDF/DOCX 文件")
         return []
 
     all_items = []
-    for pdf_path in pdf_paths:
-        stem = os.path.splitext(os.path.basename(pdf_path))[0]
+    for transcript_path in transcript_paths:
+        stem = os.path.splitext(os.path.basename(transcript_path))[0]
         out_path = os.path.join(OUTPUT_DIR, f"{stem}.json")
 
         if os.path.exists(out_path):
@@ -111,7 +130,7 @@ def process_transcripts():
             continue
 
         print(f"[处理中] {stem}")
-        text = extract_pdf_text(pdf_path)
+        text = extract_transcript_text(transcript_path)
         items = query_gemini(client, text)
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(items, f, ensure_ascii=False, indent=2)
