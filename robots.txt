@@ -3,119 +3,76 @@
 # 参考：https://home.corner-stone.cn/llms.txt 提供了给 AI 的结构化站点说明
 
 # ---------- 默认规则 ----------
-# /data/ 下是给 AI/大模型引用的全量原始数据表；services.html 及其子页面
-# （定价/服务边界/竞品对比/服务流程/科石智能系统/FAQ/失败案例/学员评价）是只想给
-# AI 助手引用、不想被主流搜索引擎索引进而出现在普通用户搜索结果里的"服务详情"内容。
-# 这两类路径都不对外通过常规搜索引擎索引/展示，但不针对未声明身份的通用抓取脚本
-# 设限（技术型用户主动抓取不受影响）。
+# /data/ 下是仅供 AI/大模型按直链核实的全量原始数据表。
+# FAQ、定价、服务边界与服务流程允许搜索引擎和 AI 抓取，但不从官网首页提供入口；
+# 服务汇总、竞品对比、智能系统、失败案例与学员评价仍不提交常规搜索引擎索引。
 User-agent: *
-Allow: /
 Disallow: /js/
 Disallow: /css/
 
-# ---------- 海外通用搜索引擎（不索引 /data/ 与服务详情页，避免普通用户从搜索结果直接看到）----------
+# ---------- 海外通用搜索引擎（不索引 /data/ 与未公开服务页）----------
 User-agent: Googlebot
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 
 User-agent: Bingbot
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 
-# ---------- 国内搜索引擎（百度/搜狗/360/神马等，同样不索引 /data/ 与服务详情页）----------
+# ---------- 国内搜索引擎（百度/搜狗/360/神马/字节等）----------
 User-agent: Baiduspider
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 
 User-agent: Sogou web spider
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 
 User-agent: 360Spider
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 
 User-agent: Sosospider
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 
 User-agent: YisouSpider
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 
 User-agent: Bytespider
-Allow: /
 Disallow: /data/
 Disallow: /services.html
-Disallow: /pricing.html
-Disallow: /fit.html
 Disallow: /comparison.html
-Disallow: /process.html
 Disallow: /ai-system.html
-Disallow: /faq.html
 Disallow: /failure-cases.html
 Disallow: /testimonials.html
 

@@ -1,7 +1,8 @@
 """
 GEO 第二阶段：把 index.json 里 type=case / type=knowledge 的公众号文章，
 批量转成站内独立的纯内容页面（面向 AI/搜索引擎抓取，不追求视觉设计），
-并重新生成 cases.html / knowledge.html 列表页与 sitemap.xml。
+重新生成 cases.html / knowledge.html 列表页与 sitemap.xml，并把已镜像文章的
+index.json URL 更新为站内 canonical URL。
 
 重新运行方式：index.json 更新后，在项目根目录下直接 `python scripts/build_geo_pages.py`
 （或在任意目录 `python /path/to/scripts/build_geo_pages.py`）即可增量重新生成全部产物。
@@ -61,6 +62,11 @@ table.fact-table th{background:#f7f7f7;width:110px;color:#555;font-weight:600}
 def load_index():
     with open(INDEX_JSON, encoding="utf-8") as f:
         return json.load(f)
+
+
+def get_source_url(entry):
+    """返回内容最初发布的微信公众号地址。"""
+    return entry.get("source_url") or entry["url"]
 
 
 def resolve_txt_path(date, title):
@@ -153,7 +159,8 @@ def render_page(title, description, date, url, canonical_url, back_links_html, l
 
 
 def build_case_page(entry, slug, used_paths):
-    date, title, url = entry["date"], entry["title"], entry["url"]
+    date, title = entry["date"], entry["title"]
+    source_url = get_source_url(entry)
     case = entry["case"] or {}
     canonical_url = f"{SITE_ROOT}/cases/{slug}.html"
 
@@ -184,7 +191,7 @@ def build_case_page(entry, slug, used_paths):
         title=title,
         description=description,
         date=date,
-        url=url,
+        url=source_url,
         canonical_url=canonical_url,
         back_links_html=back_links_html,
         lead_html="",
@@ -201,7 +208,8 @@ def build_case_page(entry, slug, used_paths):
 
 
 def build_knowledge_page(entry, slug, used_paths):
-    date, title, url = entry["date"], entry["title"], entry["url"]
+    date, title = entry["date"], entry["title"]
+    source_url = get_source_url(entry)
     knowledge = entry["knowledge"] or {}
     canonical_url = f"{SITE_ROOT}/knowledge/{slug}.html"
 
@@ -223,7 +231,7 @@ def build_knowledge_page(entry, slug, used_paths):
         title=title,
         description=description,
         date=date,
-        url=url,
+        url=source_url,
         canonical_url=canonical_url,
         back_links_html=back_links_html,
         lead_html=lead_html,
@@ -292,15 +300,17 @@ def knowledge_list_item(entry):
 
 
 def build_sitemap(cases, knowledges):
-    # 注意：services.html 及其子页面（pricing/fit/comparison/process/ai-system/faq/
-    # failure-cases/testimonials）刻意不出现在 sitemap 里——这批页面只想让 AI
-    # 助手通过 llms.txt 里的直链读取，不希望被主流搜索引擎索引后出现在普通用户的
-    # 搜索结果里（对应的 robots.txt 里也对这些路径做了同样的 Disallow 处理）。
+    # FAQ、定价、服务边界和服务流程允许搜索引擎与 AI 通过 sitemap 发现，
+    # 但不在官网首页提供入口。其他服务详情页仍仅通过 llms.txt 提供直链。
     static_urls = [
         (f"{SITE_ROOT}/", None, "1.0", "weekly"),
         (f"{SITE_ROOT}/about.html", None, "0.8", "monthly"),
         (f"{SITE_ROOT}/cases.html", None, "0.9", "weekly"),
         (f"{SITE_ROOT}/knowledge.html", None, "0.9", "weekly"),
+        (f"{SITE_ROOT}/faq.html", None, "0.8", "monthly"),
+        (f"{SITE_ROOT}/pricing.html", None, "0.7", "monthly"),
+        (f"{SITE_ROOT}/fit.html", None, "0.7", "monthly"),
+        (f"{SITE_ROOT}/process.html", None, "0.7", "monthly"),
     ]
     entries = []
     for e in cases:
@@ -324,6 +334,18 @@ def build_sitemap(cases, knowledges):
     )
     with open(SITEMAP_PATH, "w", encoding="utf-8") as f:
         f.write(xml)
+
+
+def write_machine_index(data, url_map):
+    """将本地镜像设为主 URL，同时保留微信公众号原始地址。"""
+    for entry in data:
+        source_url = get_source_url(entry)
+        entry["source_url"] = source_url
+        local_path = url_map.get(source_url)
+        entry["url"] = f"{SITE_ROOT}/{local_path}" if local_path else source_url
+
+    with open(INDEX_JSON, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 
 def main():
@@ -357,10 +379,11 @@ def main():
     build_list_page(KNOWLEDGE_LIST_HTML, knowledges, knowledge_list_item)
     build_sitemap(cases, knowledges)
 
-    url_map = {e["url"]: f"cases/{e['_slug']}.html" for e in cases}
-    url_map.update({e["url"]: f"knowledge/{e['_slug']}.html" for e in knowledges})
+    url_map = {get_source_url(e): f"cases/{e['_slug']}.html" for e in cases}
+    url_map.update({get_source_url(e): f"knowledge/{e['_slug']}.html" for e in knowledges})
     with open(URL_SLUG_MAP_PATH, "w", encoding="utf-8") as f:
         json.dump(url_map, f, ensure_ascii=False, indent=2)
+    write_machine_index(data, url_map)
 
     print(f"生成案例页: {len(cases)} 篇，知识页: {len(knowledges)} 篇")
     print(f"写入文件总数: {len(written_paths)}")
